@@ -12,5 +12,5 @@ public interface UserCrudRepository extends JpaRepository<User, Long> {
     Optional<User> getByUsername(String username);
 
     @Modifying
-    void deleteByUsername(String username);
+    int deleteByUsername(String username);
 }
