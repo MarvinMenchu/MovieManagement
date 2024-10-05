@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int deleteOneByUsername(String username) {
+    public void deleteOneByUsername(String username) {
 //        User user = this.getOneByUsername(username);
 //        userCrudRepository.delete(user);
         if (userCrudRepository.deleteByUsername(username) != 1) {
