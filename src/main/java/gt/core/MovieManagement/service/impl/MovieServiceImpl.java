@@ -7,10 +7,12 @@ import gt.core.MovieManagement.service.MovieService;
 import gt.core.MovieManagement.util.MovieGenre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class MovieServiceImpl implements MovieService {
 
     private final MovieCrudRepository movieCrudRepository;
@@ -20,26 +22,31 @@ public class MovieServiceImpl implements MovieService {
         this.movieCrudRepository = movieCrudRepository;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Movie> getAll() {
         return movieCrudRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Movie> getAllByTitle(String title) {
         return movieCrudRepository.getByTitleContaining(title);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Movie> getAllByGenre(MovieGenre genre) {
         return movieCrudRepository.getByGenre(genre);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Movie> getAllByGenreAndTitle(MovieGenre genre, String title) {
         return movieCrudRepository.getByGenreAndTitleContaining(genre, title);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Movie getOneById(Long id) {
         return movieCrudRepository.findById(id)

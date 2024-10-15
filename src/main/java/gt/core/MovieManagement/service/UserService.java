@@ -11,4 +11,5 @@ public interface UserService {
     User createOne(User user);
     User updateOneByUsername(String username, User user);
     void deleteOneByUsername(String username);
+    void deleteAll();
 }
