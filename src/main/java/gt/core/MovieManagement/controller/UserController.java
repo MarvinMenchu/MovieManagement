@@ -1,8 +1,10 @@
 package gt.core.MovieManagement.controller;
 
+import gt.core.MovieManagement.exception.ObjectNotFoundException;
 import gt.core.MovieManagement.persistence.entity.User;
 import gt.core.MovieManagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +21,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<User> getAll(@RequestParam(required = false) String name) {
+    public ResponseEntity<List<User>> getAll(@RequestParam(required = false) String name) {
 
         List<User> users = null;
 
@@ -30,11 +32,15 @@ public class UserController {
         }
 
         System.out.println("Entro al metodo findAll de UserController");
-        return users;
+        return ResponseEntity.ok(users);
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/{username}")
-    public User findOneByUsername(@PathVariable String username) {
-        return userService.getOneByUsername(username);
+    public ResponseEntity<User> findOneByUsername(@PathVariable String username) {
+        try {
+            return ResponseEntity.ok(userService.getOneByUsername(username));
+        } catch (ObjectNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
