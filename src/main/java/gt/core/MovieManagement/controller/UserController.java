@@ -5,6 +5,7 @@ import gt.core.MovieManagement.dto.response.GetUser;
 import gt.core.MovieManagement.exception.ObjectNotFoundException;
 import gt.core.MovieManagement.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -51,18 +52,18 @@ public class UserController {
 
     //@RequestMapping(method = RequestMethod.POST)
     @PostMapping
-    public ResponseEntity<GetUser> createOne(@RequestBody SaveUser saveDato,
+    public ResponseEntity<GetUser> createOne(@Valid @RequestBody SaveUser saveDato,
                                           HttpServletRequest request) {
         GetUser userCreated = userService.createOne(saveDato);
         String baseURL = request.getRequestURL().toString();
-        URI newLocation = URI.create(baseURL + "/" + userCreated.username());
+        URI newLocation = URI.create(baseURL + "/" + saveDato.username());
         return ResponseEntity.created(newLocation).body(userCreated);
     }
 
     //@RequestMapping(method = RequestMethod.PUT, path = "/{username}")
     @PutMapping(value = "/{username}")
     public ResponseEntity<GetUser> updateOneByUsername(@PathVariable String username,
-                                                    @RequestBody SaveUser saveDto) {
+                                                       @Valid @RequestBody SaveUser saveDto) {
         try {
             return ResponseEntity.ok(userService.updateOneByUsername(username, saveDto));
         } catch (ObjectNotFoundException e) {

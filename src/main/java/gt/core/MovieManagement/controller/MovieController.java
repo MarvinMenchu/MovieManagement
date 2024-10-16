@@ -7,6 +7,7 @@ import gt.core.MovieManagement.persistence.entity.Movie;
 import gt.core.MovieManagement.service.MovieService;
 import gt.core.MovieManagement.util.MovieGenre;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -61,8 +62,9 @@ public class MovieController {
 
     //@RequestMapping(method = RequestMethod.POST)
     @PostMapping
-    public ResponseEntity<GetMovie> createOne(@RequestBody SaveMovie saveDto,
+    public ResponseEntity<GetMovie> createOne(@Valid @RequestBody SaveMovie saveDto,
                                            HttpServletRequest request) {
+
         GetMovie movieCreated = movieService.createOne(saveDto);
 
         String baseURL = request.getRequestURL().toString();
@@ -74,7 +76,7 @@ public class MovieController {
     //@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
     @PutMapping(value = "/{id}")
     public ResponseEntity<GetMovie> updateOneById(@PathVariable Long id,
-                                               @RequestBody SaveMovie saveDto) {
+                                                  @Valid @RequestBody SaveMovie saveDto) {
         try{
             GetMovie updatedMovie = movieService.updateOneById(id, saveDto);
             return ResponseEntity.ok(updatedMovie);
