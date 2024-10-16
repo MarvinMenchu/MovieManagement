@@ -52,11 +52,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     protected User getOneEntityByUsername(String username) {
         return userCrudRepository.getByUsername(username)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "[user:" + username + "]"
-                ));
-                //.orElseThrow(() -> new ObjectNotFoundException("[user:" + username + "]"));
+                .orElseThrow(() -> new ObjectNotFoundException("[user:" + username + "]"));
     }
 
     @Override
