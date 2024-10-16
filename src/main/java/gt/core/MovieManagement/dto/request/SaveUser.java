@@ -8,5 +8,5 @@ public record SaveUser(
         String username,
         String name,
         String password,
-        @JsonProperty(value = "password-repeated") String passwordRepeated
+        @JsonProperty(value = "password_repeated") String passwordRepeated
 ) implements Serializable {}
