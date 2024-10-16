@@ -1,17 +1,18 @@
 package gt.core.MovieManagement.service;
 
-import gt.core.MovieManagement.persistence.entity.Movie;
+import gt.core.MovieManagement.dto.request.SaveMovie;
+import gt.core.MovieManagement.dto.response.GetMovie;
 import gt.core.MovieManagement.util.MovieGenre;
 
 import java.util.List;
 
 public interface MovieService {
-    List<Movie> getAll();
-    List<Movie> getAllByTitle(String title);
-    List<Movie> getAllByGenre(MovieGenre genre);
-    List<Movie> getAllByGenreAndTitle(MovieGenre genre, String title);
-    Movie getOneById(Long id);
-    Movie createOne(Movie movie);
-    Movie updateOneById(Long id, Movie movie);
+    List<GetMovie> getAll();
+    List<GetMovie> getAllByTitle(String title);
+    List<GetMovie> getAllByGenre(MovieGenre genre);
+    List<GetMovie> getAllByGenreAndTitle(MovieGenre genre, String title);
+    GetMovie getOneById(Long id);
+    GetMovie createOne(SaveMovie saveDto);
+    GetMovie updateOneById(Long id, SaveMovie saveDto);
     void deleteOneById(Long id);
 }

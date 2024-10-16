@@ -1,6 +1,9 @@
 package gt.core.MovieManagement.service.impl;
 
+import gt.core.MovieManagement.dto.request.SaveUser;
+import gt.core.MovieManagement.dto.response.GetUser;
 import gt.core.MovieManagement.exception.ObjectNotFoundException;
+import gt.core.MovieManagement.mapper.UserMapper;
 import gt.core.MovieManagement.persistence.entity.Movie;
 import gt.core.MovieManagement.persistence.entity.User;
 import gt.core.MovieManagement.persistence.repository.MovieCrudRepository;
@@ -27,34 +30,41 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<User> getAll() {
-        return userCrudRepository.findAll();
+    public List<GetUser> getAll() {
+        return UserMapper.toGetDto(userCrudRepository.findAll());
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<User> getAllByName(String name) {
-        return userCrudRepository.getByNameContaining(name);
+    public List<GetUser> getAllByName(String name) {
+        return UserMapper.toGetDto(userCrudRepository.getByNameContaining(name));
     }
 
     @Transactional(readOnly = true)
     @Override
-    public User getOneByUsername(String username) {
+    public GetUser getOneByUsername(String username) {
+        return UserMapper.toGetDto(this.getOneEntityByUsername(username));
+    }
+
+    @Transactional(readOnly = true)
+    private User getOneEntityByUsername(String username) {
         return userCrudRepository.getByUsername(username)
                 .orElseThrow(() -> new ObjectNotFoundException("[user:" + username + "]"));
     }
 
     @Override
-    public User createOne(User user) {
-        return userCrudRepository.save(user);
+    public GetUser createOne(SaveUser saveDto) {
+        User newUser = UserMapper.toEntity(saveDto);
+        return UserMapper.toGetDto(userCrudRepository.save(newUser));
     }
 
     @Override
-    public User updateOneByUsername(String username, User user) {
-        User oldUser = this.getOneByUsername(username);
-        oldUser.setName(user.getName());
-        oldUser.setPassword(user.getPassword());
-        return userCrudRepository.save(oldUser);
+    public GetUser updateOneByUsername(String username, SaveUser saveDto) {
+        User oldUser = this.getOneEntityByUsername(username);
+
+        UserMapper.updateEntity(oldUser, saveDto);
+
+        return UserMapper.toGetDto(userCrudRepository.save(oldUser));
     }
 
     @Override

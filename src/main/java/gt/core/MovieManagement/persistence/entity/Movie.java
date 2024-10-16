@@ -14,7 +14,7 @@ import java.util.List;
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    //@JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
     @Column(nullable = false)
@@ -24,20 +24,20 @@ public class Movie {
     private String director;
 
     @Enumerated(EnumType.STRING)
-    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
+    //@JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private MovieGenre genre;
 
-    @JsonProperty(value = "release-year")
+    //@JsonProperty(value = "release-year")
     private int releaseYear;
 
     @CreationTimestamp
-    @JsonProperty(value = "created-at")
-    @JsonFormat(pattern = "yyyy/MM/dd - HH:mm:ss")
+    //@JsonProperty(value = "created-at")
+    //@JsonFormat(pattern = "yyyy/MM/dd - HH:mm:ss")
     @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT NOW()")
     private LocalDateTime createdAt;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "movie")
-    @JsonManagedReference("movie-to-rating")
+    //@JsonManagedReference("movie-to-rating")
     private List<Rating> ratings;
 
     public Long getId() {

@@ -10,27 +10,27 @@ import org.hibernate.annotations.Check;
 public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    //@JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
     @Column(name = "movie_id", nullable = false)
-    @JsonProperty("movie-id")
+    //@JsonProperty("movie-id")
     private Long movieId;
 
     @Column(name = "user_id", nullable = false)
-    @JsonProperty("user-id")
+    //@JsonProperty("user-id")
     private Long userId;
 
     @ManyToOne
     @JoinColumn(name = "movie_id", insertable = false, updatable = false)
     //@JsonIgnore
-    @JsonBackReference("movie-to-rating")
+    //@JsonBackReference("movie-to-rating")
     private Movie movie;
 
     @ManyToOne
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     //@JsonIgnore
-    @JsonBackReference("user-to-rating")
+    //@JsonBackReference("user-to-rating")
     private User user;
 
     @Check(constraints = "rating >= 0 AND rating <= 5")

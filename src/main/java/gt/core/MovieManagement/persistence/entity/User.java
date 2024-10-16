@@ -13,7 +13,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    //@JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -25,13 +25,13 @@ public class User {
     private String password;
 
     @CreationTimestamp
-    @JsonProperty(value = "created-at")
-    @JsonFormat(pattern = "yyyy/MM/dd - HH:mm:ss")
+    //@JsonProperty(value = "created-at")
+    //@JsonFormat(pattern = "yyyy/MM/dd - HH:mm:ss")
     @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT NOW()")
     private LocalDateTime createdAt;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-    @JsonManagedReference("user-to-rating")
+    //@JsonManagedReference("user-to-rating")
     private List<Rating> ratings;
 
     public Long getId() {

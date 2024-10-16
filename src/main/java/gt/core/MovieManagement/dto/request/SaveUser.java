@@ -1,0 +1,12 @@
+package gt.core.MovieManagement.dto.request;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
+
+public record SaveUser(
+        String username,
+        String name,
+        String password,
+        @JsonProperty(value = "password-repeated") String passwordRepeated
+) implements Serializable {}
