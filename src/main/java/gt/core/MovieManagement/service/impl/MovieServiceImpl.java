@@ -9,8 +9,10 @@ import gt.core.MovieManagement.persistence.repository.MovieCrudRepository;
 import gt.core.MovieManagement.service.MovieService;
 import gt.core.MovieManagement.util.MovieGenre;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -61,7 +63,8 @@ public class MovieServiceImpl implements MovieService {
     @Transactional(readOnly = true)
     public Movie getOneEntityById(Long id) {
         return movieCrudRepository.findById(id)
-                .orElseThrow(() -> new ObjectNotFoundException("[movie:" + Long.toString(id) + "]"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.valueOf(404), "Product not found: " + id));
+                //.orElseThrow(() -> new ObjectNotFoundException("[movie:" + Long.toString(id) + "]"));
     }
 
     @Override

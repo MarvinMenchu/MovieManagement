@@ -11,8 +11,10 @@ import gt.core.MovieManagement.persistence.repository.UserCrudRepository;
 import gt.core.MovieManagement.service.UserService;
 import gt.core.MovieManagement.service.validator.PasswordValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -48,9 +50,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional(readOnly = true)
-    private User getOneEntityByUsername(String username) {
+    protected User getOneEntityByUsername(String username) {
         return userCrudRepository.getByUsername(username)
-                .orElseThrow(() -> new ObjectNotFoundException("[user:" + username + "]"));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "[user:" + username + "]"
+                ));
+                //.orElseThrow(() -> new ObjectNotFoundException("[user:" + username + "]"));
     }
 
     @Override
