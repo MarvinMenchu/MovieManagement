@@ -3,7 +3,6 @@ package gt.core.MovieManagement.controller;
 import gt.core.MovieManagement.dto.request.SaveMovie;
 import gt.core.MovieManagement.dto.response.GetMovie;
 import gt.core.MovieManagement.exception.ObjectNotFoundException;
-import gt.core.MovieManagement.persistence.entity.Movie;
 import gt.core.MovieManagement.service.MovieService;
 import gt.core.MovieManagement.util.MovieGenre;
 import jakarta.servlet.http.HttpServletRequest;
@@ -60,7 +59,6 @@ public class MovieController {
     @PostMapping
     public ResponseEntity<GetMovie> createOne(@Valid @RequestBody SaveMovie saveDto,
                                            HttpServletRequest request) {
-
         GetMovie movieCreated = movieService.createOne(saveDto);
 
         String baseURL = request.getRequestURL().toString();
@@ -73,24 +71,15 @@ public class MovieController {
     @PutMapping(value = "/{id}")
     public ResponseEntity<GetMovie> updateOneById(@PathVariable Long id,
                                                   @Valid @RequestBody SaveMovie saveDto) {
-        try{
-            GetMovie updatedMovie = movieService.updateOneById(id, saveDto);
-            return ResponseEntity.ok(updatedMovie);
-        } catch (ObjectNotFoundException e) {
-            return ResponseEntity.notFound().build();
-
-        }
+        GetMovie updatedMovie = movieService.updateOneById(id, saveDto);
+        return ResponseEntity.ok(updatedMovie);
     }
 
     //@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deleteOneById(@PathVariable Long id) {
-        try {
-            movieService.deleteOneById(id);
-            return ResponseEntity.noContent().build();
-        } catch (ObjectNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        movieService.deleteOneById(id);
+        return ResponseEntity.noContent().build();
     }
 
     //@RequestMapping(method = RequestMethod.POST)

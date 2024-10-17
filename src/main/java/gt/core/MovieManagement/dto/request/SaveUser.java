@@ -12,11 +12,11 @@ public record SaveUser(
         String username,
         @Size(max = 255, message = "{generic.size}")
         String name,
-        @Size(min = 10, max = 255, message = "{generic.size}")
-        @NotBlank(message = "{generic.notblank}")
+        //@Size(min = 10, max = 255, message = "{generic.size}")
+        //@NotBlank(message = "{generic.notblank}")
         String password,
         @JsonProperty(value = "password_repeated")
-        @Size(min = 10, max = 255, message = "{generic.size}")
-        @NotBlank(message = "{generic.notblank}")
+        //@Size(min = 10, max = 255, message = "{generic.size}")
+        //@NotBlank(message = "{generic.notblank}")
         String passwordRepeated
 ) implements Serializable {}

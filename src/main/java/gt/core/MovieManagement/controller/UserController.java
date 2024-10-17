@@ -60,22 +60,14 @@ public class UserController {
     @PutMapping(value = "/{username}")
     public ResponseEntity<GetUser> updateOneByUsername(@PathVariable String username,
                                                        @Valid @RequestBody SaveUser saveDto) {
-        try {
             return ResponseEntity.ok(userService.updateOneByUsername(username, saveDto));
-        } catch (ObjectNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
     }
 
     //@RequestMapping(method = RequestMethod.DELETE, path = "/{username}")
     @DeleteMapping(value = "/{username}")
     public ResponseEntity<Void> deleteOneByUsername(@PathVariable String username) {
-        try {
-            userService.deleteOneByUsername(username);
-            return ResponseEntity.noContent().build();
-        } catch (ObjectNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        userService.deleteOneByUsername(username);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping
